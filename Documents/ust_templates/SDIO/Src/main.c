@@ -106,6 +106,12 @@ int main(void)
 	{
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_RESET);
 		f_open(&myFILE, myPath, FA_WRITE |FA_CREATE_ALWAYS);
+		uint16_t i;
+		/*
+		for (i = 0; i < sizeof(myData); i++)
+		{
+			f_write(&myFILE, myData+i, 1, &numberofbytes);
+		}*/
 		f_write(&myFILE, myData, sizeof(myData), &numberofbytes);
 		f_close(&myFILE);
 		HAL_Delay(1000);

@@ -25,6 +25,16 @@ elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_
 elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sram.h
 elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+elec3300_camera\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_camera\main.o: ../Inc/fatfs.h
+elec3300_camera\main.o: ../Middlewares/Third_Party/FatFs/src/ff.h
+elec3300_camera\main.o: ../Middlewares/Third_Party/FatFs/src/integer.h
+elec3300_camera\main.o: ../Inc/ffconf.h
+elec3300_camera\main.o: ../Inc/bsp_driver_sd.h
+elec3300_camera\main.o: ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
+elec3300_camera\main.o: ../Middlewares/Third_Party/FatFs/src/diskio.h
+elec3300_camera\main.o: ../Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.h
 elec3300_camera\main.o: ../Inc/lcd.h
 elec3300_camera\main.o: ../Inc/bsp_ov7725.h
 elec3300_camera\main.o: ../Inc/bsp_sccb.h

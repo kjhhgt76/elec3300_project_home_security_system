@@ -102,6 +102,12 @@ int main(void)
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 	LCD_INIT();
+	
+	FATFS myFATFS;
+	FIL myFILE;
+	UINT numberofbytes;
+	FRESULT res;
+	res = f_mount(&myFATFS,SDPath,1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,6 +121,28 @@ int main(void)
 		if (Ov7725_vsync == 2){ //finish capturing
 			if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == SET){ //if KEY1 press, take a photo
 				FIFO_PREPARE; //ready for FIFO
+				if (res == FR_OK) // if sd card is successfully detected.
+				{
+					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_RESET); // green light.
+					char myPath[] = "IMAGEDATA\0"; // the filename of the image data.
+					uint16_t camera_data;
+					uint16_t i, j;
+					f_open(&myFILE, myPath, FA_WRITE |FA_CREATE_ALWAYS);
+					for (i = 0; i < 240; i++)
+					{
+						for (j = 0; j < 320; j++)
+						{
+							READ_FIFO_PIXEL(camera_data);
+							f_write(&myFILE, &camera_data, sizeof(camera_data), &numberofbytes); // write the raw imagedata.
+						}
+					}
+					f_close(&myFILE);
+					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,GPIO_PIN_RESET); // finished writing, blue light.
+				}
+				else
+				{
+					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET); // unable to detect available sd card. red light.
+				}
 				ImagDisp();			//function in bsp_ov7725.c
 				Ov7725_vsync = 0;   //reset to 0 for detect next photo
 			}
