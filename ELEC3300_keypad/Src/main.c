@@ -81,7 +81,7 @@ char read_keypad (void)
 	}else if (HAL_GPIO_ReadPin (GPIOE, GPIO_PIN_6) == RESET){
 		HAL_Delay(200);
 		return '2';
-	}else if (HAL_GPIO_ReadPin (GPIOD, GPIO_PIN_2) == RESET){
+	}else if (HAL_GPIO_ReadPin (GPIOB, GPIO_PIN_2) == RESET){
 		HAL_Delay(200);
 		return '3';
 	}else if (HAL_GPIO_ReadPin (GPIOA, GPIO_PIN_12) == RESET){
@@ -100,7 +100,7 @@ char read_keypad (void)
 	}else if (HAL_GPIO_ReadPin (GPIOE, GPIO_PIN_6) == RESET){
 		HAL_Delay(200);
 		return '5';
-	}else if (HAL_GPIO_ReadPin (GPIOD, GPIO_PIN_2) == RESET){
+	}else if (HAL_GPIO_ReadPin (GPIOB, GPIO_PIN_2) == RESET){
 		HAL_Delay(200);
 		return '6';
 	}else if (HAL_GPIO_ReadPin (GPIOA, GPIO_PIN_12) == RESET){
@@ -119,7 +119,7 @@ char read_keypad (void)
 	}else if (HAL_GPIO_ReadPin (GPIOE, GPIO_PIN_6) == RESET){
 		HAL_Delay(200);
 		return '8';
-	}else if (HAL_GPIO_ReadPin (GPIOD, GPIO_PIN_2) == RESET){
+	}else if (HAL_GPIO_ReadPin (GPIOB, GPIO_PIN_2) == RESET){
 		HAL_Delay(200);
 		return '9';
 	}else if (HAL_GPIO_ReadPin (GPIOA, GPIO_PIN_12) == RESET){
@@ -138,7 +138,7 @@ char read_keypad (void)
 	}else if (HAL_GPIO_ReadPin (GPIOE, GPIO_PIN_6) == RESET){
 		HAL_Delay(200);
 		return '0';
-	}else if (HAL_GPIO_ReadPin (GPIOD, GPIO_PIN_2) == RESET){
+	}else if (HAL_GPIO_ReadPin (GPIOB, GPIO_PIN_2) == RESET){
 		HAL_Delay(200);
 		return '#';
 	}else if (HAL_GPIO_ReadPin (GPIOA, GPIO_PIN_12) == RESET){
@@ -387,6 +387,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PB2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /*Configure GPIO pins : PB10 PB11 PB12 PB13
                            PB14 PB15 PB8 PB9 */
   GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13
@@ -414,12 +420,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PD2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PE1 */
   GPIO_InitStruct.Pin = GPIO_PIN_1;
