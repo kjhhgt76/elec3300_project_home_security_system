@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -94,7 +94,27 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
+	FATFS myFATFS;
+	FIL myFILE;
+	UINT numberofbytes;
+	char myPath[] = "TEST.TXT\0";
+	char myData[] = "Hello World\0";
+	FRESULT res;
 
+  res = f_mount(&myFATFS,SDPath,1);
+	if (res == FR_OK)
+	{
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_RESET);
+		f_open(&myFILE, myPath, FA_WRITE |FA_CREATE_ALWAYS);
+		f_write(&myFILE, myData, sizeof(myData), &numberofbytes);
+		f_close(&myFILE);
+		HAL_Delay(1000);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,GPIO_PIN_RESET);
+ 	}	
+	else
+	{
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET);		
+	}
   /* USER CODE END 2 */
 
   /* Infinite loop */
