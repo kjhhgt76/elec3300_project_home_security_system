@@ -1490,26 +1490,26 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       152         24          0          0          0       3414   bsp_driver_sd.o
-       148         22          0          0          0       3625   diskio.o
-        32         10          0          5          0       1460   fatfs.o
-      4638         70        172          8         24      32082   ff.o
-        70          4          0          0         12       1603   ff_gen_drv.o
-       406         56          0          0        132     470602   main.o
-       264         34         20          1          0       4416   sd_diskio.o
-        36          8        304          0      16384        812   startup_stm32f103xe.o
-       164         28          0         12          0       6573   stm32f1xx_hal.o
-       172         14          0          0          0      25150   stm32f1xx_hal_cortex.o
-       498         42          0          0          0       2916   stm32f1xx_hal_gpio.o
-       192         26          0          0          0       1575   stm32f1xx_hal_msp.o
-      1244         74          0          0          0       4126   stm32f1xx_hal_rcc.o
-      2416          4          0          0          0      12812   stm32f1xx_hal_sd.o
-        20          0          0          0          0       3866   stm32f1xx_it.o
-      1630         42          0          0          0      22011   stm32f1xx_ll_sdmmc.o
-        72         16         16          4          0       1183   system_stm32f1xx.o
+       152         24          0          0          0       3478   bsp_driver_sd.o
+       148         22          0          0          0       3697   diskio.o
+        32         10          0          5          0       1508   fatfs.o
+      4638         70        172          8         24      32454   ff.o
+        70          4          0          0         12       1639   ff_gen_drv.o
+       406         56          0          0        132     470794   main.o
+       264         34         20          1          0       4496   sd_diskio.o
+        36          8        304          0      16384        820   startup_stm32f103xe.o
+       164         28          0         12          0       6661   stm32f1xx_hal.o
+       172         14          0          0          0      25210   stm32f1xx_hal_cortex.o
+       498         42          0          0          0       2944   stm32f1xx_hal_gpio.o
+       192         26          0          0          0       1611   stm32f1xx_hal_msp.o
+      1244         74          0          0          0       4174   stm32f1xx_hal_rcc.o
+      2416          4          0          0          0      12972   stm32f1xx_hal_sd.o
+        20          0          0          0          0       3962   stm32f1xx_it.o
+      1630         42          0          0          0      22351   stm32f1xx_ll_sdmmc.o
+        72         16         16          4          0       1211   system_stm32f1xx.o
 
     ----------------------------------------------------------------------
-     12170        474        544         36      16556     598226   Object Totals
+     12170        474        544         36      16556     599982   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         16          0          0          6          4          0   (incl. Padding)
 
@@ -1549,8 +1549,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     12292        490        544         36      16556     592574   Grand Totals
-     12292        490        544         36      16556     592574   ELF Image Totals
+     12292        490        544         36      16556     594330   Grand Totals
+     12292        490        544         36      16556     594330   ELF Image Totals
      12292        490        544         36          0          0   ROM Totals
 
 ==============================================================================
