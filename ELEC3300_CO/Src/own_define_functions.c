@@ -15,7 +15,7 @@ int photoNum = 1;*/
 
 //variables for camera module
 //volatile uint8_t Ov7725_vsync ;
-//ADC_HandleTypeDef hadc1;
+
 float R0;
 
 //char read_keypad (void){

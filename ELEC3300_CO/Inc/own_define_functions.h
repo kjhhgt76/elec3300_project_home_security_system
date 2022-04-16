@@ -28,6 +28,7 @@
 //extern volatile uint8_t Ov7725_vsync ;
 
 //variables for CO sensor
+extern ADC_HandleTypeDef hadc1;
 extern float R0;
 
 char read_keypad (void);		       //function to read keypad

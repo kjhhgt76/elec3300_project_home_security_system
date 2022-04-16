@@ -46,7 +46,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-//extern ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc1;
 
 SRAM_HandleTypeDef hsram1;
 

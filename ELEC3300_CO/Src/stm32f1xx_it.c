@@ -48,7 +48,6 @@ __IO uint32_t co_sensor_val = 0;
 /*   RESET <=> voltage into AWD window   */
 /*   SET   <=> voltage out of AWD window */
 uint8_t         ubAnalogWatchdogStatus = RESET;  /* Set into analog watchdog interrupt callback */
-ADC_HandleTypeDef hadc1;
 
 /* USER CODE END PV */
 
