@@ -28,3 +28,7 @@ elec3300_co\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sr
 elec3300_co\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 elec3300_co\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_co\stm32f1xx_it.o: ../Inc/stm32f1xx_it.h
+elec3300_co\stm32f1xx_it.o: ../Inc/own_define_functions.h
+elec3300_co\stm32f1xx_it.o: ../Inc/lcd_own.h
+elec3300_co\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+elec3300_co\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

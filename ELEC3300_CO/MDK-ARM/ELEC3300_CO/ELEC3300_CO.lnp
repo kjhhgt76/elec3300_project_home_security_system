@@ -4,6 +4,7 @@
 "elec3300_co\main.o"
 "elec3300_co\stm32f1xx_it.o"
 "elec3300_co\stm32f1xx_hal_msp.o"
+"elec3300_co\own_define_functions.o"
 "elec3300_co\stm32f1xx_hal_gpio_ex.o"
 "elec3300_co\stm32f1xx_hal_adc.o"
 "elec3300_co\stm32f1xx_hal_adc_ex.o"

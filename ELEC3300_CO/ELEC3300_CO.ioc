@@ -1,10 +1,14 @@
 #MicroXplorer Configuration settings - do not modify
+ADC1.AWD1HighThreshold=2000
+ADC1.AWD1ITMode=ENABLE
 ADC1.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_10
 ADC1.ContinuousConvMode=ENABLE
-ADC1.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,master,ContinuousConvMode
+ADC1.EnableAnalogWatchDog=true
+ADC1.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,master,ContinuousConvMode,EnableAnalogWatchDog,WatchdogChannel,AWD1ITMode,AWD1HighThreshold
 ADC1.NbrOfConversionFlag=1
 ADC1.Rank-0\#ChannelRegularConversion=1
 ADC1.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_55CYCLES_5
+ADC1.WatchdogChannel=ADC_CHANNEL_10
 ADC1.master=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
@@ -84,6 +88,7 @@ Mcu.UserConstants=
 Mcu.UserName=STM32F103VETx
 MxCube.Version=5.2.0
 MxDb.Version=DB.5.0.20
+NVIC.ADC1_2_IRQn=true\:0\:0\:false\:false\:true\:true\:true
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.EXTI3_IRQn=true\:0\:0\:false\:false\:true\:true\:true

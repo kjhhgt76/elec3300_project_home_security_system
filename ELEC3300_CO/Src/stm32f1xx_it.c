@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_it.h"
+#include "own_define_functions.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -42,6 +43,12 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+__IO uint32_t co_sensor_val = 0;
+/* Variable to report ADC analog watchdog status:   */
+/*   RESET <=> voltage into AWD window   */
+/*   SET   <=> voltage out of AWD window */
+uint8_t         ubAnalogWatchdogStatus = RESET;  /* Set into analog watchdog interrupt callback */
+ADC_HandleTypeDef hadc1;
 
 /* USER CODE END PV */
 
@@ -211,7 +218,52 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles ADC1 and ADC2 global interrupts.
+  */
+void ADC1_2_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_2_IRQn 0 */
 
+  /* USER CODE END ADC1_2_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_2_IRQn 1 */
+
+  /* USER CODE END ADC1_2_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+/**
+  * @brief  This function handles ADC interrupt request.
+  * @param  None
+  * @retval None
+  */
+/**
+  * @brief  Analog watchdog callback in non blocking mode.
+  * @param  hadc: ADC handle
+  * @retval None
+  */
+  void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef* hadc)
+{
+  /* Set variable to report analog watchdog out of window status to main      */
+  /* program.                                                                 */
+	int ppm = CO_ppm(&R0);
+	LCD_Clear(0,0,240,320, BACKGROUND);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET);
+	if (ppm >= 8){
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET);
+		LCD_DrawString(10, 30, "Abnormal CO gas detected");
+	}
+	//print out ppm value
+	char ppm_str[10];
+	sprintf(ppm_str, "%d", ppm);
+	int i;
+	for(i=0;i<strlen(ppm_str);i++){
+		LCD_DrawChar(10+i*8,10,ppm_str[i]);
+	}
+	HAL_Delay(3000);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_SET);
+  ubAnalogWatchdogStatus = SET;
+}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -28,3 +28,4 @@ elec3300_co\lcd_own.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sram.h
 elec3300_co\lcd_own.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 elec3300_co\lcd_own.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_co\lcd_own.o: ../Inc/ascii.h
+elec3300_co\lcd_own.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

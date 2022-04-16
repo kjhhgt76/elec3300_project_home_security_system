@@ -1,5 +1,6 @@
 #include "lcd_own.h"
 #include "ascii.h"	
+#include "math.h"
 
 void		LCD_REG_Config          ( void );
 void		LCD_FillColor           ( uint32_t ulAmout_Point, uint16_t usColor );
@@ -642,3 +643,5 @@ void LCD_homepage(){
 	LCD_Clear(5, 190, 230, 30, BLUE);
 	LCD_DrawString(55, 196, "Sensors Reading");
 }
+
+

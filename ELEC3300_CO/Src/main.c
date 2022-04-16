@@ -27,7 +27,7 @@
 #include "stdio.h"
 #include <math.h>
 #include "string.h"
-
+#include "own_define_functions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
+//extern ADC_HandleTypeDef hadc1;
 
 SRAM_HandleTypeDef hsram1;
 
@@ -59,7 +59,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_FSMC_Init(void);
 static void MX_ADC1_Init(void);
-
 /* USER CODE BEGIN PFP */
 //uint32_t air_sensor_val, co_sensor_val;
 //float air_sensor_volt, co_sensor_volt;
@@ -72,7 +71,7 @@ static void MX_ADC1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void COsensor_INIT(float* R0){
+/*void COsensor_INIT(float* R0){
 	//HAL_Delay(60000); //warm up the sensor
 	uint32_t air_sensor_val = HAL_ADC_GetValue(&hadc1);
 	float air_sensor_volt = (float)(air_sensor_val/1024.0);
@@ -88,7 +87,8 @@ int CO_ppm(float* R0){
 	float x = 44444*ratio;
 	int ppm = pow(x,-1.5226)*1000;
 	return ppm;
-};
+};*/
+//float R0;
 /* USER CODE END 0 */
 
 /**
@@ -131,68 +131,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	//HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // lights off
-	//HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // lights off
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_SET);
 	
-	//char air_sensor_volt_str[10], ratio_str[50];
-	
-	//HAL_Delay(60000); //warm up the sensor
-	//air_sensorval = HAL_ADC_GetValue(&hadc1);
-	//air_sensor_volt = (float)(air_sensorval/1024.0);
-	//RS_gas_clean = ((5.0 /air_sensor_volt) - 1)*10000;
-	//R0 = RS_gas_clean / 25.75;
-	
-	/* debugging used
-	snprintf(air_sensor_volt_str,10, "%f\n", air_sensor_volt);
-	for(i=0;i<strlen(air_sensor_volt_str);i++){
-		LCD_DrawChar(10+i*8,10,air_sensor_volt_str[i]);
-	}
-	*/
 	HAL_Delay(3000);
-	float R0;
 	COsensor_INIT(&R0);
   while (1)
   {
+		LCD_DrawString(10,100, "Ready");
+		HAL_Delay(500);
 		
-		//HAL_Delay(500);
-		/* read DOUT for debugging
-		if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5) == GPIO_PIN_RESET){
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_RESET);
-			LCD_DrawString(10, 100, "Have CO gas");
-		}else{
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET);
-			LCD_DrawString(10, 100, "No CO gas");
-		}*/
-		
-		//calculate ppm
-		//co_sensorval = HAL_ADC_GetValue(&hadc1);
-		//co_sensor_volt = (float)(co_sensorval/1024.0);
-		//RS_gas_co = (5.0-co_sensor_volt)/co_sensor_volt;
-		//ratio = RS_gas_co/R0;
-		//x = 44444*ratio;
-		//ppm = pow(x,-1.5226)*1000;
-		int ppm = CO_ppm(&R0);
-		
-		/* debugging used
-		snprintf(ratio_str,50, "%f\n", ratio);
-		for(i=0;i<strlen(ratio_str);i++){      
-			LCD_DrawChar(10+i*8,30,ratio_str[i]);
-		}*/
-		
-		//lights up if above 10 ppm
-		if (ppm > 10){
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET);
-			LCD_DrawString(10, 30, "Have CO gas");
-		}else{
-			LCD_DrawString(10, 30, "No CO gas");
-		}
-		//print out ppm value
-		char ppm_str[2];
-		sprintf(ppm_str, "%02d", ppm);
-		int i;
-		for(i=0;i<2;i++){
-			LCD_DrawChar(10+i*8,10,ppm_str[i]);
-		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -256,6 +204,7 @@ static void MX_ADC1_Init(void)
 
   /* USER CODE END ADC1_Init 0 */
 
+  ADC_AnalogWDGConfTypeDef AnalogWDGConfig = {0};
   ADC_ChannelConfTypeDef sConfig = {0};
 
   /* USER CODE BEGIN ADC1_Init 1 */
@@ -271,6 +220,17 @@ static void MX_ADC1_Init(void)
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Analog WatchDog 1
+  */
+  AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_SINGLE_REG;
+  AnalogWDGConfig.HighThreshold = 2500;
+  AnalogWDGConfig.LowThreshold = 0;
+  AnalogWDGConfig.Channel = ADC_CHANNEL_10;
+  AnalogWDGConfig.ITMode = ENABLE;
+  if (HAL_ADC_AnalogWDGConfig(&hadc1, &AnalogWDGConfig) != HAL_OK)
   {
     Error_Handler();
   }
