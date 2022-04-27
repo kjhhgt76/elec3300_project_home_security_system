@@ -20,16 +20,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "lcd_own.h"
-#include "bsp_ov7725.h"
-#include "bsp_sccb.h"
-#include <string.h>
-#include "bmp.h"
-#include "xpt2046.h"
 #include "own_define_functions.h"
 /* USER CODE END Includes */
 
@@ -116,24 +109,24 @@ int main(void)
 	macXPT2046_CS_DISABLE();
 	
 	LCD_INIT();
+	COsensor_INIT(&R0);
 	
 	HAL_ADCEx_Calibration_Start(&hadc1);
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, 1000);
-	
-	HAL_ADCEx_Calibration_Start(&hadc2);
+	/*HAL_ADCEx_Calibration_Start(&hadc2);
 	HAL_ADC_Start(&hadc2);
 	HAL_ADC_PollForConversion(&hadc2, 1000);
 	
 	HAL_ADCEx_Calibration_Start(&hadc3);
 	HAL_ADC_Start(&hadc3);
-	HAL_ADC_PollForConversion(&hadc3, 1000);
+	HAL_ADC_PollForConversion(&hadc3, 1000);*/
 	
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // green off
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET); // red on
 	
 	//start page
-	LCD_DrawString(30, 100, "Home Protecting System");
+	LCD_DrawString_Color(30, 100, "Home Protecting System", BACKGROUND, BLUE);
 	HAL_Delay(4000);
 
 	while( ! XPT2046_Touch_Calibrate () );   //calibrate TouchPad
@@ -141,9 +134,9 @@ int main(void)
 	
 	//set the password first
 	LCD_Clear(0, 0, 240, 320, WHITE);
-	LCD_DrawString(10,10,"Please set a password with 4 places :");
+	LCD_DrawString_Color(10,10,"Please set a password with 4 places :", BACKGROUND, BLUE);
 	enterPassword(password);
-	LCD_DrawString(10,100,"Password successfully set");
+	LCD_DrawString_Color(10,150,"Password successfully set", BACKGROUND, BLUE);
 	HAL_Delay(2000);
 	
 	//draw homepage
@@ -152,13 +145,18 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
 	while (1)
-  {
-		if( ucXPT2046_TouchFlag == 1 ){
-			//Check_homepage buttons;
-			check_homepage();
-      ucXPT2046_TouchFlag = 0;		            
-    }
+  {	
+		/*uint32_t co_sensor_val = HAL_ADC_GetValue(&hadc1);
+		float co_sensor_val_f = (float) co_sensor_val;
+		if(co_sensor_val_f >= 2800){
+			LCD_Clear(0,0,240,320,BACKGROUND);
+			LCD_DrawString(10,10,"Abnormal CO level");
+			HAL_Delay(5000);
+			LCD_homepage();
+		}*/
+
 		//if user trigger #, check the password
 		if(read_keypad() == '#'){
 			verifyPassword(password, password_enter, &photoNum, &door_status);
@@ -166,6 +164,13 @@ int main(void)
 			LCD_homepage();
 			continue;
 		}
+		
+		//check homepage buttons
+		if( ucXPT2046_TouchFlag == 1 ){
+			check_homepage();
+			ucXPT2046_TouchFlag = 0;	
+    }
+		
 		//close door after open for a while
 		if (door_status == 1){
 			HAL_Delay(1000);
@@ -173,8 +178,10 @@ int main(void)
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // green off
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET); // red on
 		}
+		
 		//if door close with compass> 0 degree
-		//if CO sensor detect CO
+		//if flame sensor
+		//if fingerprint sensor
 		
 		HAL_Delay(50);
     /* USER CODE END WHILE */
@@ -411,8 +418,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2|GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5
-                          |GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4
+                          |GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
@@ -458,6 +465,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = GPIO_PIN_0;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA2 PA3 */

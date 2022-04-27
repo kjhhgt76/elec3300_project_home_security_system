@@ -1,4 +1,4 @@
-elec3300_touchpad\stm32f1xx_hal_dma.o: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c
+elec3300_touchpad\stm32f1xx_hal_dma.o: ..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c
 elec3300_touchpad\stm32f1xx_hal_dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 elec3300_touchpad\stm32f1xx_hal_dma.o: ../Inc/stm32f1xx_hal_conf.h
 elec3300_touchpad\stm32f1xx_hal_dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h

@@ -100,18 +100,67 @@ int newbmp(const char* myPath){
 				uint16_t i, j;	
 				uint16_t Camera_Data;
 					
-				LCD_Cam_Gram(); //function in lcd.c
+				//LCD_Cam_Gram(); //function in lcd.c
 				for (i = 0; i < 240; i++)
 				{
 					for (j = 0; j < 320; j++)
 					{
 						READ_FIFO_PIXEL(Camera_Data);
 						f_write(&myFILE, &Camera_Data, sizeof(Camera_Data), &numberofbytes); // write the raw imagedata.
-						LCD_Write_Data(Camera_Data);
+						//LCD_Write_Data(Camera_Data);
 					}
 				}
 				f_close(&myFILE);
 				Ov7725_vsync = 0;
+				return 0;
+			}else{
+				return 1;
+			}
+		}else{
+			return 1;
+		}
+	}else{
+		return 1;
+	}
+}
+
+int readbmp(const char* myPath){
+	if (f_mount(&myFATFS,SDPath,1) == FR_OK){ // if sd card is successfully detected.
+		if (f_open(&myFILE, myPath, FA_READ) == FR_OK ){
+			bmp.bmfHeader.bfType =  0x4D42 ; 			//bmp type "BM" 
+			bmp.bmfHeader.bOffBits = sizeof(bmp.bmfHeader) + sizeof(bmp.bmiHeader) + sizeof(bmp.RGB_MASK); ; 				//The number of bytes occupied by the bitmap information structure
+			bmp.bmfHeader.bfSize = bmp.bmfHeader.bOffBits + 320 * 240 * 2; 	//File size (information structure + pixel data) 
+			bmp.bmfHeader.bfReserved1 =  0x0000 ; 		//Reserved, must be 0 
+			bmp.bmfHeader.bfReserved2 =  0x0000;   			
+			
+			bmp.bmiHeader.biSize = sizeof(bmp.bmiHeader) ;   			//bitmap information header size of width
+			bmp.bmiHeader.biWidth = 320. ;   		//bitmap 
+			bmp.bmiHeader.biHeight = 240 ;   		//image height 
+			bmp.bmiHeader.biPlanes = 1 ;   			//set another target level must be 1 
+			bmp.bmiHeader.biBitCount = 16 ;         //bits per pixel 
+			bmp.bmiHeader.biCompression = 3;   	//RGB565 format 
+			bmp.bmiHeader.biSizeImage = 320 * 240 * 2 ; //The number of bytes occupied by the actual bitmap (only the bitmap pixel data is considered) 
+			bmp.bmiHeader.biXPelsPerMeter = 0 ; 	//horizontal resolution 
+			bmp.bmiHeader.biYPelsPerMeter = 0 ;  	//vertical resolution 
+			bmp.bmiHeader.biClrImportant = 0 ;    	//color index number of the image display described have an important influence, 0 represents all colors as important 
+			bmp.bmiHeader.biClrUsed = 0 ;   
+			
+			bmp.RGB_MASK[0] = 0X00F800;
+			bmp.RGB_MASK[1] = 0X0007E0;
+			bmp.RGB_MASK[2] = 0X00001F;
+			if (f_read(&myFILE, &bmp , sizeof(bmp), &numberofbytes) == FR_OK){
+				uint16_t i, j;	
+				uint16_t Camera_Data;
+				LCD_Cam_Gram(); //function in lcd.c
+				for (i = 0; i < 240; i++)
+				{
+					for (j = 0; j < 320; j++)
+					{
+						f_read(&myFILE, &Camera_Data, sizeof(Camera_Data), &numberofbytes); // write the raw imagedata.
+						LCD_Write_Data(Camera_Data);
+					}
+				}
+				f_close(&myFILE);
 				return 0;
 			}else{
 				return 1;
@@ -178,6 +227,14 @@ int main(void)
 			const char* myPath = "test1.bmp"; // the filename of the image data.
 			if(newbmp(myPath) == 0){
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_RESET); // green light.
+			}
+		}
+		
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == SET){
+			const char* myPath = "test2.bmp";
+			if (readbmp(myPath) == 0){
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // green off.
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,GPIO_PIN_RESET); // red light.
 			}
 		}
     /* USER CODE END WHILE */
@@ -282,6 +339,12 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PC13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PC3 */
   GPIO_InitStruct.Pin = GPIO_PIN_3;

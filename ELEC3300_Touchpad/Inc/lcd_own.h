@@ -54,6 +54,9 @@
 #define      CMD_Set_PAGE		   0x2B	     
 #define      CMD_SetPixel		   0x2C	     
 
+void		LCD_REG_Config          ( void );
+void		LCD_FillColor           ( uint32_t ulAmout_Point, uint16_t usColor );
+uint16_t	LCD_Read_PixelData      ( void );
 void         	LCD_INIT		( void );
 void           	LCD_Rst			( void );
 void            LCD_BackLed_Control	( FunctionalState enumState );
@@ -68,7 +71,6 @@ void            LCD_DrawLine		( uint16_t usC1, uint16_t usP1, uint16_t usC2, uin
 void            LCD_DrawChar		( uint16_t usC, uint16_t usP, const char cChar);
 void            LCD_DrawString		( uint16_t usC, uint16_t usP, const char * pStr);
 void            LCD_DrawDot		( uint16_t usC, uint16_t usP, uint16_t usColor );
-void 		LCD_DrawCircle		( uint16_t usC, uint16_t usP, uint16_t R, uint16_t usColor);
 
 void LCD_DrawCross ( uint16_t usX, uint16_t usY );
 void LCD_DrawChar_Color ( uint16_t usC, uint16_t usP, const char cChar, uint16_t usColor_Background, uint16_t usColor_Foreground );

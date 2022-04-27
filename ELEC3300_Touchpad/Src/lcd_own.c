@@ -1,10 +1,6 @@
 #include "lcd_own.h"
 #include "ascii.h"	
 
-void		LCD_REG_Config          ( void );
-void		LCD_FillColor           ( uint32_t ulAmout_Point, uint16_t usColor );
-uint16_t	LCD_Read_PixelData      ( void );
-
 
 void Delay ( __IO uint32_t nCount ){  for ( ; nCount != 0; nCount -- );}
 
@@ -425,11 +421,6 @@ void LCD_DrawDot(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t usColor)
 
 }
 
-void LCD_DrawCircle ( uint16_t usC, uint16_t usP, uint16_t R, uint16_t usColor)
-{	
-
-}
-
 void LCD_DrawChar_Color ( uint16_t usC, uint16_t usP, const char cChar, uint16_t usColor_Background, uint16_t usColor_Foreground )
 {
 	uint8_t ucTemp, ucRelativePositon, ucPage, ucColumn;
@@ -625,20 +616,20 @@ void LCD_Cam_Gram()
 
 void LCD_homepage(){
 	LCD_Clear(0, 0, 240, 320, BACKGROUND);
-	LCD_DrawString(30, 10, "Home Protecting System");
+	LCD_DrawString_Color(30, 10, "Home Protecting System", BACKGROUND, BLUE);
 	//1st button
 	LCD_Clear(5, 30, 230, 30, BLUE);
-	LCD_DrawString(28, 36, "Set new/Change password");
+	LCD_DrawString_Color(28, 36, "Set new/Change password", BACKGROUND, BLUE);
 	//2nd button
 	LCD_Clear(5, 70, 230, 30, BLUE);
-	LCD_DrawString(25, 76, "Register new fingerprint");
+	LCD_DrawString_Color(25, 76, "Register new fingerprint", BACKGROUND, BLUE);
 	//3rd button
 	LCD_Clear(5, 110, 230, 30, BLUE);
-	LCD_DrawString(5, 116, "Delete registered fingerprint");
+	LCD_DrawString_Color(5, 116, "Delete registered fingerprint", BACKGROUND, BLUE);
 	//4th buttons
 	LCD_Clear(5, 150, 230, 30, BLUE);
-	LCD_DrawString(50, 156, "Photos in SD card");
+	LCD_DrawString_Color(50, 156, "Photos in SD card", BACKGROUND, BLUE);
 	//5th buttons
 	LCD_Clear(5, 190, 230, 30, BLUE);
-	LCD_DrawString(55, 196, "Sensors Reading");
+	LCD_DrawString_Color(55, 196, "Sensors Reading", BACKGROUND, BLUE);
 }
