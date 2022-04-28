@@ -24,8 +24,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "own_define_functions.h"
-#include "xpt2046.h"
-#include "bsp_ov7725.h"
 
 /* USER CODE END Includes */
 

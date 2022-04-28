@@ -20,7 +20,7 @@ char * readPhotoPath[]={"photo1.bmp","photo2.bmp","photo3.bmp","photo4.bmp","pho
 volatile uint8_t Ov7725_vsync ; 
 
 //variables for CO sensor
-float R0;
+//float R0;
 
 char read_keypad (void){
 	/* Make ROW 1 LOW and all other ROWs HIGH */
@@ -331,7 +331,29 @@ void readbmp(void){
 	HAL_Delay(1000);
 };
 
-void COsensor_INIT(float* R0){
+void CO_detect(void){
+	//char str[20] = {0};
+	uint32_t sensor_val = HAL_ADC_GetValue(&hadc1);
+	//sprintf(str, "%u",sensor_val);
+	if (sensor_val >= 1300 && sensor_val < 2800){
+		LCD_Clear(0,0,240,320, BACKGROUND);
+		LCD_DrawString(10,10,"Abnormal CO level detected");
+		//LCD_DrawString(10,30,str);
+		HAL_Delay(5000);
+		LCD_homepage();
+	}else if (sensor_val >= 2800 && sensor_val < 3500){
+		LCD_Clear(0,0,240,320, BACKGROUND);
+		LCD_DrawString(10,10,"Dangerous CO level detected");
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+		//LCD_DrawString(10,30,str);
+		HAL_Delay(5000);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+		LCD_homepage();
+	}
+}
+
+
+/*void COsensor_INIT(float* R0){
 	//HAL_Delay(60000); //warm up the sensor
 	uint32_t air_sensor_val = HAL_ADC_GetValue(&hadc1);
 	float air_sensor_volt = (float)(air_sensor_val/700.0);
@@ -347,36 +369,8 @@ int CO_ppm(float* R0){
 	float x = 44444*ratio;
 	int ppm = pow(x,-1.5226);
 	return ppm;
-};
-
-/*void showReadings(float* R0, int* ppm, int* door_status){
-	LCD_DrawString_Color(30, 10, "Sensors Reading", BACKGROUND, BLUE);
-	LCD_DrawString_Color(10, 40, "CO ppm level : ", BACKGROUND, BLUE);
-	LCD_DrawString_Color(10, 70, "Door status : ", BACKGROUND, BLUE);
-	LCD_DrawString_Color(10, 300, "Press K1 back to the homepage", BACKGROUND, BLUE);
-	char ppm_str[2];
-	do{
-		LCD_Clear(150, 40, 90, 280, BACKGROUND);
-		*ppm = CO_ppm(R0);
-		sprintf(ppm_str, "%02d", *ppm);
-		//print vlaue and status of different sensors
-		int i;
-		for(i=0;i<2;i++){
-			LCD_DrawChar_Color(150+i*8, 40, ppm_str[i], BACKGROUND, BLUE);
-		}
-		LCD_DrawString_Color(150, 40, ppm_str, BACKGROUND, BLUE);
-		if (*ppm >10){
-			LCD_DrawString_Color(170, 40, "DANGEROUS", BACKGROUND, RED);
-		}else{
-			LCD_DrawString_Color(170, 40, "SAFE", BACKGROUND, GREEN);
-		}
-		if (door_status == 0){
-			LCD_DrawString_Color(150, 70, "OPEN", BACKGROUND, RED);
-		}else{
-			LCD_DrawString_Color(150, 70, "CLOSE", BACKGROUND, GREEN);
-		}
-	}while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == RESET);
 };*/
+
 
 void check_homepage(void){
 	strType_XPT2046_Coordinate strDisplayCoordinate;
@@ -412,19 +406,3 @@ void check_homepage(void){
 		LCD_homepage();
 	}
 };
-
-/*void HAL_ADC_1(ADC_HandleTypeDef* hadc) 
-{ 
-  uint32_t co_sensor_val = 0;
-	co_sensor_val = HAL_ADC_GetValue(&hadc1);
-	HAL_ADC_Stop_IT(&hadc1);
-	float co_sensor_val_f = (float)co_sensor_val;
-	if (co_sensor_val_f >=2800){
-		LCD_Clear(0,0,240,320, BACKGROUND);
-		LCD_DrawString(10, 10, "Abnormal CO gas level detected");
-		comeback = 1;
-	}
-	HAL_Delay(1000);
-	LCD_DrawString(10, 50, "Delay");
-  HAL_ADC_Start_IT (&hadc1); 
-};*/
