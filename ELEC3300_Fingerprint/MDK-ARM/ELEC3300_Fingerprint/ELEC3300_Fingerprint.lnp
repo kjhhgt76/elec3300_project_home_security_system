@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"elec3300_fingerprint\startup_stm32f103xe.o"
+"elec3300_fingerprint\main.o"
+"elec3300_fingerprint\stm32f1xx_it.o"
+"elec3300_fingerprint\stm32f1xx_hal_msp.o"
+"elec3300_fingerprint\as608.o"
+"elec3300_fingerprint\rgb_led.o"
+"elec3300_fingerprint\lcd.o"
+"elec3300_fingerprint\stm32f1xx_hal_gpio_ex.o"
+"elec3300_fingerprint\stm32f1xx_ll_fsmc.o"
+"elec3300_fingerprint\stm32f1xx_hal_sram.o"
+"elec3300_fingerprint\stm32f1xx_hal_tim.o"
+"elec3300_fingerprint\stm32f1xx_hal_tim_ex.o"
+"elec3300_fingerprint\stm32f1xx_hal_uart.o"
+"elec3300_fingerprint\stm32f1xx_hal.o"
+"elec3300_fingerprint\stm32f1xx_hal_rcc.o"
+"elec3300_fingerprint\stm32f1xx_hal_rcc_ex.o"
+"elec3300_fingerprint\stm32f1xx_hal_gpio.o"
+"elec3300_fingerprint\stm32f1xx_hal_dma.o"
+"elec3300_fingerprint\stm32f1xx_hal_cortex.o"
+"elec3300_fingerprint\stm32f1xx_hal_pwr.o"
+"elec3300_fingerprint\stm32f1xx_hal_flash.o"
+"elec3300_fingerprint\stm32f1xx_hal_flash_ex.o"
+"elec3300_fingerprint\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "ELEC3300_Fingerprint\ELEC3300_Fingerprint.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "ELEC3300_Fingerprint.map" -o ELEC3300_Fingerprint\ELEC3300_Fingerprint.axf
