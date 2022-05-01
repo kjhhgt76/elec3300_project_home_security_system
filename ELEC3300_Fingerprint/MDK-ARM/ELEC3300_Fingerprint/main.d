@@ -30,3 +30,4 @@ elec3300_fingerprint\main.o: ../Src/as608.h
 elec3300_fingerprint\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_fingerprint\main.o: ../Src/rgb_led.h
 elec3300_fingerprint\main.o: ../Src/lcd.h
+elec3300_fingerprint\main.o: ../Src/key.h

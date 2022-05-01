@@ -58,14 +58,17 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define key1_Pin GPIO_PIN_0
+#define key1_GPIO_Port GPIOA
 #define rgb_green_Pin GPIO_PIN_0
 #define rgb_green_GPIO_Port GPIOB
 #define rgb_blue_Pin GPIO_PIN_1
 #define rgb_blue_GPIO_Port GPIOB
 #define lcd_Pin GPIO_PIN_12
 #define lcd_GPIO_Port GPIOD
-#define fingerprint_touchout_Pin GPIO_PIN_8
-#define fingerprint_touchout_GPIO_Port GPIOA
+#define FINGERPRINT_Pin GPIO_PIN_8
+#define FINGERPRINT_GPIO_Port GPIOA
+#define FINGERPRINT_EXTI_IRQn EXTI9_5_IRQn
 #define rgb_red_Pin GPIO_PIN_5
 #define rgb_red_GPIO_Port GPIOB
 #define lcdE1_Pin GPIO_PIN_1

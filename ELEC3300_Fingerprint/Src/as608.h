@@ -32,7 +32,8 @@ typedef struct
 }SysPara;
 
 extern SysPara AS608Para;
-
+extern uint16_t current_id;
+extern uint8_t FR_state;
 void PS_StaGPIO_Init(void);//初始化PA6读状态引脚
 	
 uint8_t PS_GetImage(void); //录入图像 

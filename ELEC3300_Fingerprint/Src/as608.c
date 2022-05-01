@@ -3,10 +3,10 @@
 #include "stm32f1xx_hal.h"
 #include <stdio.h>
 #include <string.h>
+#include "lcd.h"
 
 uint32_t AS608Addr = 0XFFFFFFFF; //默认
 char str2[6] = {0};
-
 //串口接收缓存区 	
 uint8_t USART1_RX_BUF[USART1_MAX_RECV_LEN]; 				//接收缓冲,最大USART1_MAX_RECV_LEN个字节.
 uint8_t USART1_TX_BUF[USART1_MAX_SEND_LEN]; 			  //发送缓冲,最大USART1_MAX_SEND_LEN字节
@@ -533,7 +533,10 @@ uint8_t PS_ValidTempleteNum(uint16_t *ValidN)
 
   if(ensure == 0x00)
   {
-    printf("\r\n有效指纹个数=%d", (data[10] << 8) + data[11]);
+		LCD_Clear(0, 0, 240, 320, WHITE);
+		char str[30];
+		sprintf(str, "number of models: %d", *ValidN);
+		LCD_DrawString(10, 10, str);
   }
   else
     printf("\r\n%s", EnsureMessage(ensure));
@@ -812,53 +815,58 @@ void ShowErrMessage(uint8_t ensure)
 
 SysPara AS608Para;//指纹模块AS608参数
 //刷指纹
-//void press_FR(void)
-//{
-//  SearchResult seach;
-//  uint8_t ensure;
-//  char str[20];
-//	uint8_t key_num = 0;
-//  while(key_num != KEYBACK_PRES)
-//  {
-//    key_num = key_scan();
-//    ensure = PS_GetImage();
-//    if(ensure == 0x00) //获取图像成功
-//    {
-//      ensure = PS_GenChar(CharBuffer1);
-//      if(ensure == 0x00) //生成特征成功
-//      {
-//        ensure = PS_HighSpeedSearch(CharBuffer1, 0, 99, &seach);
-//        if(ensure == 0x00) //搜索成功
-//        {
-//					OLED_FullyClear();
-//          OLED_ShowMixedCH(0, 16, "  指纹验证成功  ");
-//          sprintf(str, " ID:%d 得分:%d ", seach.pageID, seach.mathscore);
-//          OLED_ShowMixedCH(0, 32, (uint8_t*)str);
-//					OLED_RefreshRAM();
-//          HAL_Delay(1500);
-//          HAL_Delay(1500);
-//        }
-//        else
-//        {
-//          OLED_ShowMixedCH(32, 16, "验证失败");
-//					OLED_RefreshRAM();
-//          HAL_Delay(1500);
-//        }
-//      }
-//      else
-//			{};
-//      OLED_FullyClear();
-//      OLED_ShowMixedCH(32, 16, "请按手指");
-//			OLED_RefreshRAM();
-//    }
-//  }
-//  OLED_FullyClear();
-//  OLED_ShowMixedCH(0, 0, "指纹模块测试程序");
-//  OLED_ShowMixedCH(16, 16, "K1键添加指纹");
-//  OLED_ShowMixedCH(16, 32, "K3键删除指纹");
-//  OLED_ShowMixedCH(16, 48, "K5键验证指纹");
-//	OLED_RefreshRAM();
-//}
+void press_FR(void)
+{
+  SearchResult seach;
+  uint8_t ensure;
+  char str[20];
+	uint8_t key_num = 0;
+  while(1 /*key_num != KEYBACK_PRES*/)
+  {
+    //key_num = key_scan();
+    ensure = PS_GetImage();
+    if(ensure == 0x00) //获取图像成功
+    {
+      ensure = PS_GenChar(CharBuffer1);
+      if(ensure == 0x00) //生成特征成功
+      {
+        ensure = PS_HighSpeedSearch(CharBuffer1, 0, 99, &seach);
+        if(ensure == 0x00) //搜索成功
+        {
+					LCD_Clear(0, 0, 240, 320, WHITE);
+          LCD_DrawString(10, 10, "Verification succeeded.\0");
+					LCD_Clear(0, 0, 240, 320, WHITE);
+          sprintf(str, " ID:%d score:%d ", seach.pageID, seach.mathscore);
+          LCD_DrawString(10, 10, str);
+          HAL_Delay(1500);
+          HAL_Delay(1500);
+					return;
+        }
+        else
+        {
+					LCD_Clear(0, 0, 240, 320, WHITE);
+          LCD_DrawString(10, 10, "Verification failed.\0");
+          HAL_Delay(1500);
+					return;
+        }
+      }
+      else
+			{
+				LCD_Clear(0, 0, 240, 320, WHITE);
+				LCD_DrawString(10, 10, "Cannot communicate with the module!\0");
+			}
+      LCD_Clear(0, 0, 240, 320, WHITE);
+      LCD_DrawString(10, 10, "Please press your finger.\0");
+    }
+		else
+		{
+			LCD_Clear(0, 0, 240, 320, WHITE);
+			LCD_DrawString(10, 10, "No response!\0");
+		}
+  }
+  LCD_Clear(0, 0, 240, 320, WHITE	);
+
+}
 
 //删除指纹
 //void Del_FR(void)
@@ -909,19 +917,18 @@ SysPara AS608Para;//指纹模块AS608参数
 //  key_num = 0;
 //}
 
-//void delete_ALL(void)
-//{
-//		uint8_t ensure;
-//   ensure = PS_Empty(); //清空指纹库
-//   if(ensure == 0)
-//   {
-//     OLED_FullyClear();
-//     OLED_ShowMixedCH(0, 16, " 清空指纹库成功 ");
-//		 OLED_RefreshRAM();
-//   }
-//   else
-//	 {
-//      ShowErrMessage(ensure);
-//      HAL_Delay(1500);
-//   }
-//}
+void delete_ALL(void)
+{
+		uint8_t ensure;
+   ensure = PS_Empty(); //清空指纹库
+   if(ensure == 0)
+   {
+			LCD_Clear(0, 0, 240, 320, WHITE);
+			LCD_DrawString(10, 10, "Deleted all models\0");
+   }
+   else
+	 {
+      ShowErrMessage(ensure);
+      HAL_Delay(1500);
+   }
+}

@@ -30,3 +30,4 @@ elec3300_fingerprint\stm32f1xx_it.o: ../Inc/stm32f1xx_it.h
 elec3300_fingerprint\stm32f1xx_it.o: ../Src/as608.h
 elec3300_fingerprint\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_fingerprint\stm32f1xx_it.o: ../Src/rgb_led.h
+elec3300_fingerprint\stm32f1xx_it.o: ../Src/lcd.h

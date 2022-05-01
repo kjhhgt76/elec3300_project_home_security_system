@@ -26,6 +26,7 @@
 //#include "rx_data_queue.h"
 #include "as608.h"
 #include "lcd.h"
+#include "key.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +50,8 @@ UART_HandleTypeDef huart1;
 SRAM_HandleTypeDef hsram1;
 
 /* USER CODE BEGIN PV */
-
+uint8_t	FR_state = 0;
+uint16_t current_id = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,6 +100,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
+	LCD_INIT();
+	//delete_ALL();
+	PS_ValidTempleteNum(&current_id);
 	//rx_queue_init();
 	//PS_Connect(&AS608_Addr);
 	//PS_ReadSysPara(&AS608Para);
@@ -108,7 +113,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		
+		if (key1_scan())
+		{
+			FR_state = 1;
+			RGB_blue_on();
+		}
+		else
+		{
+			RGB_blue_off();
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -198,10 +211,10 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, rgb_green_Pin|rgb_blue_Pin|rgb_red_Pin, GPIO_PIN_SET);
@@ -211,6 +224,12 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(lcdE1_GPIO_Port, lcdE1_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : key1_Pin */
+  GPIO_InitStruct.Pin = key1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(key1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : rgb_green_Pin rgb_blue_Pin rgb_red_Pin */
   GPIO_InitStruct.Pin = rgb_green_Pin|rgb_blue_Pin|rgb_red_Pin;
@@ -226,11 +245,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(lcd_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : fingerprint_touchout_Pin */
-  GPIO_InitStruct.Pin = fingerprint_touchout_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  /*Configure GPIO pin : FINGERPRINT_Pin */
+  GPIO_InitStruct.Pin = FINGERPRINT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(fingerprint_touchout_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(FINGERPRINT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : lcdE1_Pin */
   GPIO_InitStruct.Pin = lcdE1_Pin;
@@ -238,6 +257,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(lcdE1_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 

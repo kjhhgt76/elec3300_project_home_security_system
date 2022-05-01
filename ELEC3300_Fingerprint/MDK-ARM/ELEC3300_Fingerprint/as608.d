@@ -1,6 +1,7 @@
 elec3300_fingerprint\as608.o: ..\Src\as608.c
 elec3300_fingerprint\as608.o: ..\Src\as608.h
 elec3300_fingerprint\as608.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+elec3300_fingerprint\as608.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 elec3300_fingerprint\as608.o: ../Inc/stm32f1xx_hal_conf.h
 elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
@@ -26,5 +27,5 @@ elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_
 elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_fingerprint\as608.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-elec3300_fingerprint\as608.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_fingerprint\as608.o: ..\Src\rgb_led.h
+elec3300_fingerprint\as608.o: ..\Src\lcd.h
