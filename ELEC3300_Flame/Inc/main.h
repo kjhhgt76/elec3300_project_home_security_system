@@ -58,6 +58,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define buzzer_Pin GPIO_PIN_1
+#define buzzer_GPIO_Port GPIOA
+#define flame_d0_Pin GPIO_PIN_1
+#define flame_d0_GPIO_Port GPIOB
+#define flame_d0_EXTI_IRQn EXTI1_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

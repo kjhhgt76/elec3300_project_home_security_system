@@ -1,0 +1,22 @@
+--cpu Cortex-M3
+"elec3300_flame\startup_stm32f103xe.o"
+"elec3300_flame\main.o"
+"elec3300_flame\stm32f1xx_it.o"
+"elec3300_flame\stm32f1xx_hal_msp.o"
+"elec3300_flame\stm32f1xx_hal_gpio_ex.o"
+"elec3300_flame\stm32f1xx_hal_tim.o"
+"elec3300_flame\stm32f1xx_hal_tim_ex.o"
+"elec3300_flame\stm32f1xx_hal.o"
+"elec3300_flame\stm32f1xx_hal_rcc.o"
+"elec3300_flame\stm32f1xx_hal_rcc_ex.o"
+"elec3300_flame\stm32f1xx_hal_gpio.o"
+"elec3300_flame\stm32f1xx_hal_dma.o"
+"elec3300_flame\stm32f1xx_hal_cortex.o"
+"elec3300_flame\stm32f1xx_hal_pwr.o"
+"elec3300_flame\stm32f1xx_hal_flash.o"
+"elec3300_flame\stm32f1xx_hal_flash_ex.o"
+"elec3300_flame\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "ELEC3300_Flame\ELEC3300_Flame.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "ELEC3300_Flame.map" -o ELEC3300_Flame\ELEC3300_Flame.axf
