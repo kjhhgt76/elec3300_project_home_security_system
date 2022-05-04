@@ -29,3 +29,4 @@ elec3300_touchpad\bsp_sccb.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_f
 elec3300_touchpad\bsp_sccb.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\bsp_sccb.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\bsp_sccb.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\bsp_sccb.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h

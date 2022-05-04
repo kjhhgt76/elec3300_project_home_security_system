@@ -30,6 +30,7 @@ elec3300_touchpad\own_define_functions.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/st
 elec3300_touchpad\own_define_functions.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\own_define_functions.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\own_define_functions.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\own_define_functions.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 elec3300_touchpad\own_define_functions.o: ../Inc/fatfs.h
 elec3300_touchpad\own_define_functions.o: ../Middlewares/Third_Party/FatFs/src/ff.h
 elec3300_touchpad\own_define_functions.o: ../Middlewares/Third_Party/FatFs/src/integer.h
@@ -45,3 +46,5 @@ elec3300_touchpad\own_define_functions.o: ../Inc/bmp.h
 elec3300_touchpad\own_define_functions.o: ../Inc/xpt2046.h
 elec3300_touchpad\own_define_functions.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_touchpad\own_define_functions.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+elec3300_touchpad\own_define_functions.o: ..\Src\as608.h
+elec3300_touchpad\own_define_functions.o: ..\Src\rgb_led.h

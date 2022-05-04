@@ -29,6 +29,7 @@ elec3300_touchpad\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_
 elec3300_touchpad\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 elec3300_touchpad\stm32f1xx_it.o: ../Inc/stm32f1xx_it.h
 elec3300_touchpad\stm32f1xx_it.o: ../Inc/own_define_functions.h
 elec3300_touchpad\stm32f1xx_it.o: ../Inc/lcd_own.h
@@ -46,3 +47,5 @@ elec3300_touchpad\stm32f1xx_it.o: ../Inc/bmp.h
 elec3300_touchpad\stm32f1xx_it.o: ../Inc/xpt2046.h
 elec3300_touchpad\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 elec3300_touchpad\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+elec3300_touchpad\stm32f1xx_it.o: ../Src/as608.h
+elec3300_touchpad\stm32f1xx_it.o: ../Src/rgb_led.h

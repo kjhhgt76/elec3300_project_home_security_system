@@ -32,6 +32,7 @@ elec3300_touchpad\ff.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 elec3300_touchpad\ff.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\ff.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\ff.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\ff.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 elec3300_touchpad\ff.o: ../Inc/bsp_driver_sd.h
 elec3300_touchpad\ff.o: ../Middlewares/Third_Party/FatFs/src/diskio.h
 elec3300_touchpad\ff.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

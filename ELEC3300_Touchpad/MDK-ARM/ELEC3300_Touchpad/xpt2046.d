@@ -29,5 +29,6 @@ elec3300_touchpad\xpt2046.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fs
 elec3300_touchpad\xpt2046.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\xpt2046.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\xpt2046.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\xpt2046.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 elec3300_touchpad\xpt2046.o: ../Inc/lcd_own.h
 elec3300_touchpad\xpt2046.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

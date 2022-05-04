@@ -33,6 +33,7 @@ elec3300_touchpad\fatfs.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc
 elec3300_touchpad\fatfs.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 elec3300_touchpad\fatfs.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 elec3300_touchpad\fatfs.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+elec3300_touchpad\fatfs.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 elec3300_touchpad\fatfs.o: ../Inc/bsp_driver_sd.h
 elec3300_touchpad\fatfs.o: ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
 elec3300_touchpad\fatfs.o: ../Middlewares/Third_Party/FatFs/src/diskio.h

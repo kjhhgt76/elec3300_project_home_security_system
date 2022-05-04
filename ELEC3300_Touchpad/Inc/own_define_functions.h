@@ -11,36 +11,28 @@
 #include "math.h"
 #include "main.h"
 
+extern int re_entry;
+
 //variables for password module
 extern uint8_t key_read;
 extern char password[4];
 extern char password_enter[4];
 extern int door_status;
-
+extern uint16_t delete_finger;
 //variables for SDIO module
-//extern FATFS photoFATFS;
-//extern FIL photoFILE;
-//extern UINT numberofbytes;
-//extern BITMAPINFO bmp;
 extern int photoNum;
 
 //variables for camera module
 extern volatile uint8_t Ov7725_vsync ;
 
-//variables for CO sensor
-//extern float R0;
-
 char read_keypad (void);		       //function to read keypad
 void enterPassword(char*);		       //function to set and enter password
 void verifyPassword(const char*, char*, int*, int*); //function to verify password & following actions
-//int newbmp(const char*); 		       //function to write new bmp
-int newbmp(void); 		       //function to write new bmp
-//void createPhotoPath(int*, char*); 	       //function to create next photo path
+int scan_re_entry(int*);					//function to scan re_rntry and take photo
+int newbmp(void); 		       	       //function to write new bmp
 void readbmp(void);			       //function to read and show bmp in SD card
 
 void CO_detect(void);			       //function to detect CO
-//void COsensor_INIT(float*);		       //function to set up CO sensor
-//int CO_ppm(float*);			       //function to calculate CO ppm
 
 void check_homepage(void);		       //function to check homepage button press
 

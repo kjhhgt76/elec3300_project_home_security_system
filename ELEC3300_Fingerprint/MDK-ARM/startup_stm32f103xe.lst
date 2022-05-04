@@ -581,16 +581,16 @@ ARM Macro Assembler    Page 9
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=elec3300_fingerprint\startup_stm32f103xe.d -oelec3300_fingerprint\
 startup_stm32f103xe.o -I.\RTE\_ELEC3300_Fingerprint -IC:\Keil_v5\ARM\PACK\ARM\C
-MSIS\5.8.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\De
-vice\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --pred
+MSIS\5.0.1\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\
+Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 523
 
 
 
 ARM Macro Assembler    Page 10 
 
 
-efine="__UVISION_VERSION SETA 523" --predefine="_RTE_ SETA 1" --predefine="STM3
-2F10X_HD SETA 1" --list=startup_stm32f103xe.lst startup_stm32f103xe.s
+" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" --list=startup_s
+tm32f103xe.lst startup_stm32f103xe.s
 
 
 
@@ -1462,4 +1462,4 @@ Symbol: __main
       At line 168 in file startup_stm32f103xe.s
 Comment: __main used once
 2 symbols
-424 symbols in table
+423 symbols in table

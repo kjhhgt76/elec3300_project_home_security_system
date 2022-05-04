@@ -1,4 +1,5 @@
 #include "own_define_functions.h"
+#include "as608.h"
 
 //variables for password module
 uint8_t key_read;
@@ -12,6 +13,8 @@ FIL photoFILE;
 UINT numberofbytes;
 BITMAPINFO bmp;
 int photoNum = 0;
+int re_entry = 0;
+uint16_t delete_finger = 0;
 char * readPhotoPath[]={"photo1.bmp","photo2.bmp","photo3.bmp","photo4.bmp","photo5.bmp","photo6.bmp","photo7.bmp",
 "photo8.bmp","photo9.bmp","photo10.bmp","photo11.bmp","photo12.bmp","photo13.bmp""photo14.bmp","photo15.bmp","photo16.bmp",
 "photo17.bmp","photo18.bmp","photo19.bmp","photo20.bmp"};
@@ -19,8 +22,7 @@ char * readPhotoPath[]={"photo1.bmp","photo2.bmp","photo3.bmp","photo4.bmp","pho
 //variables for camera module
 volatile uint8_t Ov7725_vsync ; 
 
-//variables for CO sensor
-//float R0;
+
 
 char read_keypad (void){
 	/* Make ROW 1 LOW and all other ROWs HIGH */
@@ -134,8 +136,6 @@ void enterPassword(char* arr){
 };
 
 void verifyPassword(const char* password, char* password_enter, int* photoNum, int* door_status){
-	int re_entry = 0;
-	
 	while(1){
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET);	//green off
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET);	//red on
@@ -147,8 +147,7 @@ void verifyPassword(const char* password, char* password_enter, int* photoNum, i
 		
 		if (strncmp(password, password_enter,sizeof(password)) == 0){
 			LCD_DrawString_Color(10,200,"Correct password. Door is unlocked.", BACKGROUND, BLUE);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_SET);	//red off
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);		//green on = door open
+
 			*door_status = 1;
 			break;
 		}else{
@@ -156,33 +155,35 @@ void verifyPassword(const char* password, char* password_enter, int* photoNum, i
 			for(i = 0; i<4; i++){password_enter[i] = ' ';}
 			LCD_DrawString_Color(10,150,"Incorrect password. Please re-enter the password again.", BACKGROUND, BLUE);
 			re_entry++;
-			if (re_entry > 2){
-				// the file path of the image data.
-				//char photoPath[10];
-				//createPhotoPath(photoNum, photoPath);
-				//*photoNum += 1;
-				
-				//start creating next file
-				//if(newbmp(photoPath) == 0){
-				if(newbmp() == 0){
-					LCD_DrawString(10, 220, readPhotoPath[*photoNum]);
-					LCD_DrawString(10+8*strlen(readPhotoPath[*photoNum]),220," is created");
-					if (*photoNum == 19){
-						*photoNum = 0;
-					}else{
-						*photoNum += 1;
-					}
-					LCD_REG_Config();
-					break;
-				}
-			}
+			int photo_taken = scan_re_entry(photoNum);
 			HAL_Delay(1000);
+			if (photo_taken == 0){
+				break;
+			}
 		}
 	}
 };
 
+int scan_re_entry(int* photoNum){
+	if (re_entry > 2){
+		//start creating next file
+		if(newbmp() == 0){
+			LCD_DrawString(10, 220, readPhotoPath[*photoNum]);
+			LCD_DrawString(10+8*strlen(readPhotoPath[*photoNum]),220," is created");
+			if (*photoNum == 19){
+				*photoNum = 0;
+			}else{
+				*photoNum += 1;
+			}
+			LCD_REG_Config();
+		}
+		re_entry = 0;
+		return 0;
+	}
+	return 1;
+};
+
 int newbmp(void){
-//int newbmp(const char* photoPath){
 	while(Ov7725_Init() != SUCCESS); //initialize camera ov7725; if any error, loop forever
 	Ov7725_vsync = 0;   //for detecting if camera finish capturing; if yes, it becomes 2 as detecting two failing edge in VSYNC
 	if (f_mount(&photoFATFS,SDPath,1) == FR_OK){ // if sd card is successfully detected.
@@ -243,13 +244,6 @@ int newbmp(void){
 		return 1;
 	}
 };
-
-/*void createPhotoPath(int* photoNum, char* photoPath){
-	//combine all elements
-	const char photoPath_name[5] = "photo";
-	const char extension[4] = ".bmp";
-	sprintf(photoPath, "%s%d%s",photoPath_name, *photoNum, extension);
-};*/
 
 void readbmp(void){
 	if (f_mount(&photoFATFS,SDPath,1) == FR_OK){ // if sd card is successfully detected.
@@ -352,26 +346,6 @@ void CO_detect(void){
 	}
 }
 
-
-/*void COsensor_INIT(float* R0){
-	//HAL_Delay(60000); //warm up the sensor
-	uint32_t air_sensor_val = HAL_ADC_GetValue(&hadc1);
-	float air_sensor_volt = (float)(air_sensor_val/700.0);
-	float RS_gas_clean = ((5.0 /air_sensor_volt) - 1)*10000;
-	*R0 = RS_gas_clean / 25.75;
-};
-
-int CO_ppm(float* R0){
-	uint32_t co_sensor_val = HAL_ADC_GetValue(&hadc1);
-	float co_sensor_volt = (float)(co_sensor_val/700.0);
-	float RS_gas_co = (5.0-co_sensor_volt)/co_sensor_volt;
-	float ratio = RS_gas_co / *R0;
-	float x = 44444*ratio;
-	int ppm = pow(x,-1.5226);
-	return ppm;
-};*/
-
-
 void check_homepage(void){
 	strType_XPT2046_Coordinate strDisplayCoordinate;
 	
@@ -386,20 +360,31 @@ void check_homepage(void){
 			}else if ( ( strDisplayCoordinate .y > 70 ) && ( strDisplayCoordinate .y < 100 ) ){	  //2nd button
 				//function to set new fingerprint
 				LCD_Clear(0, 0, 240, 320, BACKGROUND);
-				LCD_DrawString(10,10,"Under Construction");
+				FR_state = 1;
+				LCD_DrawString(10,10,"Please press your finger");
+				while(FR_state == 1){
+					LCD_DrawChar(10,100,' ');
+				}
+				if (FR_state == 2)
+				{
+					LCD_DrawString(10,10,"Please press your finger again");
+				}
+				while(FR_state == 2){
+					LCD_DrawChar(10,150,' ');
+				}
 			}else if ( ( strDisplayCoordinate .y > 110 ) && ( strDisplayCoordinate .y < 140 ) ){	//3rd button
 				//function to delete fingerprint
 				LCD_Clear(0, 0, 240, 320, BACKGROUND);
-				LCD_DrawString(10,10,"Under Construction");
+				LCD_DrawString(10, 10, "Please press the finger\0");
+				delete_finger = 1;
+				while(delete_finger == 1){
+					LCD_DrawChar(10,100,' ');
+				}
+				
 			}else if ( ( strDisplayCoordinate .y > 150 ) && ( strDisplayCoordinate .y < 180 ) ){	//4th button
 				//function to read SD card
 				readbmp();
 				LCD_REG_Config(); //reset LCD direction
-			}else if ( ( strDisplayCoordinate .y > 190 ) && ( strDisplayCoordinate .y < 220 ) ){	//5th button
-				//function to show readings
-				//showReadings(&R0, &ppm, &door_status);
-				LCD_Clear(0, 0, 240, 320, BACKGROUND);
-				LCD_DrawString(10,10,"Under Construction");
 			}
 		}
 		HAL_Delay(1500);
