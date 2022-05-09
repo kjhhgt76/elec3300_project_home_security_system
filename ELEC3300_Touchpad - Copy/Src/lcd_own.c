@@ -629,7 +629,4 @@ void LCD_homepage(){
 	//4th buttons
 	LCD_Clear(5, 150, 230, 30, BLUE);
 	LCD_DrawString_Color(50, 156, "Photos in SD card", BACKGROUND, BLUE);
-	//5th buttons
-	LCD_Clear(5, 190, 230, 30, BLUE);
-	LCD_DrawString_Color(55, 196, "Sensors Reading", BACKGROUND, BLUE);
 }

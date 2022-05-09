@@ -17,7 +17,7 @@
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x2000FFFF) IROM(0x8000000-0x807FFFF)  CLOCK(8000000) CPUTYPE("Cortex-M3") TZ</Cpu>
+          <Cpu>IRAM(0x20000000-0x2000FFFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;                 ../Drivers/STM32F1xx_HAL_Driver/Inc;                 ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;                 ../Middlewares/Third_Party/FatFs/src;                 ../Middlewares/Third_Party/FatFs/src/drivers;                 ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;                 ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;                            ../Drivers/STM32F1xx_HAL_Driver/Inc;                            ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;                            ../Middlewares/Third_Party/FatFs/src;                            ../Middlewares/Third_Party/FatFs/src/drivers;                            ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;                            ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -415,6 +415,21 @@
               <FilePath>..\Src\own_define_functions.c</FilePath>
             </File>
             <File>
+              <FileName>as608.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\as608.c</FilePath>
+            </File>
+            <File>
+              <FileName>rgb_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\rgb_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\key.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/main.c</FilePath>
@@ -468,11 +483,6 @@
               <FileName>stm32f1xx_hal_sram.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_sram.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_hal_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_sdmmc.c</FileName>

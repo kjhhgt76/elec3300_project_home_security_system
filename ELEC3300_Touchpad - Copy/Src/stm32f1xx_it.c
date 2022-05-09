@@ -24,8 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "own_define_functions.h"
-#include "xpt2046.h"
-#include "bsp_ov7725.h"
+#include "as608.h"
+#include "rgb_led.h"
 
 /* USER CODE END Includes */
 
@@ -202,6 +202,26 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_1) != RESET)
+	{
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_1));
+		//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_1);
+		HAL_GPIO_EXTI_Callback(GPIO_PIN_1);
+	}
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line3 interrupt.
   */
 void EXTI3_IRQHandler(void)
@@ -262,7 +282,124 @@ void EXTI4_IRQHandler(void)
 void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-
+	if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_8) != RESET)
+	{
+		if (FR_state == 0)
+		{
+			LCD_Clear(0, 0, 240, 320, WHITE);
+			LCD_DrawString(10, 10, "Detected finger!\0");
+			int16_t finger_ID = press_FR();
+			if (delete_finger == 1)
+			{
+				if (finger_ID != -1)
+					Del_FR((uint16_t)finger_ID);
+				delete_finger = 0;
+			}
+			LCD_homepage();
+		}
+		else if (FR_state == 1)
+		{
+			uint8_t ensure = 0;
+			LCD_Clear(0, 0, 240, 320, WHITE);
+			LCD_DrawString(10, 10, "First press\0");
+      ensure = PS_GetImage();
+      if(ensure == 0x00)
+      {
+        ensure = PS_GenChar(CharBuffer1);
+        if(ensure == 0x00)
+        {
+					LCD_Clear(0, 0, 240, 320, WHITE);
+					LCD_DrawString(10, 10, "First press succeeded.\0");
+					FR_state = 2;
+        }
+        else
+				{
+					LCD_Clear(0, 0, 240, 320, WHITE);
+					LCD_DrawString(10, 10, "First press failed.\0");
+					FR_state = 0;
+				}
+      }
+      else 
+			{
+				LCD_Clear(0, 0, 240, 320, WHITE);
+				LCD_DrawString(10, 10, "Response error\0");
+				FR_state = 0;
+			}
+			
+		}
+		else if (FR_state == 2)
+		{
+			uint8_t ensure = 0;
+			LCD_Clear(0, 0, 240, 320, WHITE);
+			LCD_DrawString(10, 10, "Second press\0");
+			ensure = PS_GetImage();
+			if(ensure == 0x00)
+      {
+        ensure = PS_GenChar(CharBuffer2);
+        if(ensure == 0x00)
+        {
+					LCD_Clear(0, 0, 240, 320, WHITE);
+					LCD_DrawString(10, 10, "Second press succeeded.\0");
+					LCD_Clear(0, 0, 240, 320, WHITE);
+					LCD_DrawString(10, 10, "Start matching two fingerprints.\0");
+					ensure = PS_Match();
+					if(ensure == 0x00)
+					{
+						LCD_Clear(0, 0, 240, 320, WHITE);
+						LCD_DrawString(10, 10, "Matching succeeded.\0");
+						LCD_Clear(0, 0, 240, 320, WHITE);
+						LCD_DrawString(10, 10, "Start generating model.\0");
+						ensure = PS_RegModel();
+						if (ensure == 0x00)
+						{
+							LCD_Clear(0, 0, 240, 320, WHITE);
+							LCD_DrawString(10, 10, "Model generated.\0");
+							LCD_Clear(0, 0, 240, 320, WHITE);
+							LCD_DrawString(10, 10, "Start saving model.\0");
+							ensure = PS_StoreChar(CharBuffer2, current_id);
+							if(ensure == 0x00)
+							{
+								char str[50];
+								LCD_Clear(0, 0, 240, 320, WHITE);
+								sprintf(str, "Successfully saved model, id: %d", current_id++);
+								LCD_DrawString(10, 10, str);
+								
+							}
+							else
+							{
+								LCD_Clear(0, 0, 240, 320, WHITE);
+								LCD_DrawString(10, 10, "Saving model failed.\0");
+							}
+						}
+						else
+						{
+							LCD_Clear(0, 0, 240, 320, WHITE);
+							LCD_DrawString(10, 10, "Model generation failed.\0");
+						}
+					}
+					else
+					{
+						LCD_Clear(0, 0, 240, 320, WHITE);
+						LCD_DrawString(10, 10, "Matching failed.\0");
+					}
+					HAL_Delay(500);
+        }
+        else
+				{
+					LCD_Clear(0, 0, 240, 320, WHITE);
+					LCD_DrawString(10, 10, "Second press failed.\0");
+				}
+      }
+      else 
+			{
+				LCD_Clear(0, 0, 240, 320, WHITE);
+				LCD_DrawString(10, 10, "Response error\0");
+			}
+			FR_state = 0;
+		}
+		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_8);
+		HAL_GPIO_EXTI_Callback(GPIO_PIN_8);
+	}
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
