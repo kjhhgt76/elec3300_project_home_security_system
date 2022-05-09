@@ -363,14 +363,12 @@ void check_homepage(void){
 				FR_state = 1;
 				LCD_DrawString(10,10,"Please press your finger");
 				while(FR_state == 1){
-					LCD_DrawChar(10,100,' ');
 				}
 				if (FR_state == 2)
 				{
 					LCD_DrawString(10,10,"Please press your finger again");
 				}
 				while(FR_state == 2){
-					LCD_DrawChar(10,150,' ');
 				}
 			}else if ( ( strDisplayCoordinate .y > 110 ) && ( strDisplayCoordinate .y < 140 ) ){	//3rd button
 				//function to delete fingerprint

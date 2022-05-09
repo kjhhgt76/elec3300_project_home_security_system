@@ -3,7 +3,7 @@
 <title>Static Call Graph - [ELEC3300_Touchpad\ELEC3300_Touchpad.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ELEC3300_Touchpad\ELEC3300_Touchpad.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Wed May 04 17:56:30 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Tue May 10 02:04:39 2022
 <BR><P>
 <H3>Maximum Stack Usage =       4576 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -693,7 +693,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[2b]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 582 bytes, Stack size 88 bytes, stm32f1xx_it.o(i.EXTI9_5_IRQHandler))
+<P><STRONG><a name="[2b]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 554 bytes, Stack size 88 bytes, stm32f1xx_it.o(i.EXTI9_5_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4576 + Unknown Stack Size
 <LI>Call Chain = EXTI9_5_IRQHandler &rArr; press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 </UL>
@@ -1768,7 +1768,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[111]"></a>check_homepage</STRONG> (Thumb, 268 bytes, Stack size 24 bytes, own_define_functions.o(i.check_homepage))
+<P><STRONG><a name="[111]"></a>check_homepage</STRONG> (Thumb, 242 bytes, Stack size 24 bytes, own_define_functions.o(i.check_homepage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4440<LI>Call Chain = check_homepage &rArr; readbmp &rArr; f_open &rArr; follow_path &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readbmp

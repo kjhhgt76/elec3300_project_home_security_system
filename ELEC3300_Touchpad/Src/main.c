@@ -54,7 +54,7 @@ UART_HandleTypeDef huart1;
 SRAM_HandleTypeDef hsram1;
 
 /* USER CODE BEGIN PV */
-uint8_t	FR_state = 0x00;
+volatile uint8_t FR_state = 0x00;
 uint16_t current_id = 0x00;
 /* USER CODE END PV */
 
