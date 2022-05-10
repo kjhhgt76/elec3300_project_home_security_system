@@ -598,11 +598,10 @@ ARM Macro Assembler    Page 10
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=elec3300_touchpad\startup_stm32f103xe.d -oelec3300_touchpad\startu
-p_stm32f103xe.o -I.\RTE\_ELEC3300_Touchpad -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.8.
-0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Incl
-ude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 523" --pred
-efine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" --list=startup_stm32f103
-xe.lst startup_stm32f103xe.s
+p_stm32f103xe.o -I.\RTE\_ELEC3300_Touchpad -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.
+1\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include -
+-predefine="__UVISION_VERSION SETA 523" --predefine="_RTE_ SETA 1" --predefine=
+"STM32F10X_HD SETA 1" --list=startup_stm32f103xe.lst startup_stm32f103xe.s
 
 
 
@@ -1499,4 +1498,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-427 symbols in table
+426 symbols in table
