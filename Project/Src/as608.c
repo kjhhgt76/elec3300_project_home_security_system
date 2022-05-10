@@ -528,7 +528,6 @@ int16_t press_FR(void)
   SearchResult seach;
   uint8_t ensure;
   char str[20];
-	uint8_t key_num = 0;
   while(1)
   {
 		

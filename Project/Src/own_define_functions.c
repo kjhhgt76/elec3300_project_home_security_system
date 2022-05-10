@@ -327,25 +327,25 @@ void readbmp(void){
 };
 
 void CO_detect(void){
-	//char str[20] = {0};
+	char str[20] = {0};
 	uint32_t sensor_val = HAL_ADC_GetValue(&hadc1);
-	//sprintf(str, "%u",sensor_val);
-	if (sensor_val >= 1000 && sensor_val < 1100){
+	sprintf(str, "%u",sensor_val);
+	if (sensor_val >= 900 && sensor_val < 1020){
 		uint8_t abnormal_CO[] = "Abnormal CO level detected\n";
 		LCD_Clear(0,0,240,320, BACKGROUND);
 		LCD_DrawString(10,10, (char*)abnormal_CO);
-		//LCD_DrawString(10,30,str);
+		LCD_DrawString(10,30,str);
 		HAL_UART_Transmit(&huart2,abnormal_CO ,sizeof(abnormal_CO)-1,100);
-		HAL_Delay(5000);
+		HAL_Delay(3000);
 		LCD_homepage();
-	}else if (sensor_val >= 1100 && sensor_val < 3500){
+	}else if (sensor_val >= 1020 && sensor_val < 3500){
 		LCD_Clear(0,0,240,320, BACKGROUND);
 		uint8_t dangerous_CO[] = "Dangerous CO level detected\n";
 		LCD_DrawString(10,10,(char*)dangerous_CO);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-		//LCD_DrawString(10,30,str);
+		LCD_DrawString(10,30,str);
 		HAL_UART_Transmit(&huart2,dangerous_CO ,sizeof(dangerous_CO)-1,100);
-		HAL_Delay(5000);
+		HAL_Delay(3000);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
 		LCD_homepage();
 	}
