@@ -78,8 +78,6 @@ void Error_Handler(void);
 #define Camera_VS_EXTI_IRQn EXTI3_IRQn
 #define key_1_on_board_Pin GPIO_PIN_0
 #define key_1_on_board_GPIO_Port GPIOA
-#define Buzzer_Pin GPIO_PIN_1
-#define Buzzer_GPIO_Port GPIOA
 #define keypad_R1_Pin GPIO_PIN_4
 #define keypad_R1_GPIO_Port GPIOA
 #define keypad_R2_Pin GPIO_PIN_5
@@ -130,10 +128,10 @@ void Error_Handler(void);
 #define Camera_WEN_GPIO_Port GPIOD
 #define RGB_R_for_door_Pin GPIO_PIN_5
 #define RGB_R_for_door_GPIO_Port GPIOB
-#define camera_d0_Pin GPIO_PIN_6
-#define camera_d0_GPIO_Port GPIOB
-#define camera_d1_Pin GPIO_PIN_7
-#define camera_d1_GPIO_Port GPIOB
+#define Camera_D0_Pin GPIO_PIN_8
+#define Camera_D0_GPIO_Port GPIOB
+#define Camera_D1_Pin GPIO_PIN_9
+#define Camera_D1_GPIO_Port GPIOB
 #define TouchscreenE0_Pin GPIO_PIN_0
 #define TouchscreenE0_GPIO_Port GPIOE
 #define LCD_RST_Pin GPIO_PIN_1

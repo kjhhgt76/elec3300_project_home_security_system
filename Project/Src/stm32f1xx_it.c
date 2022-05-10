@@ -208,7 +208,6 @@ void EXTI1_IRQHandler(void)
   /* USER CODE BEGIN EXTI1_IRQn 0 */
 	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_1) != RESET)
 	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 		uint8_t fire_alarm[]="Fire detected!\n";
 		HAL_UART_Transmit(&huart2,fire_alarm,sizeof(fire_alarm)-1,100);
 		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_1);

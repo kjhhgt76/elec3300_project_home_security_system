@@ -342,11 +342,9 @@ void CO_detect(void){
 		LCD_Clear(0,0,240,320, BACKGROUND);
 		uint8_t dangerous_CO[] = "Dangerous CO level detected\n";
 		LCD_DrawString(10,10,(char*)dangerous_CO);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 		LCD_DrawString(10,30,str);
 		HAL_UART_Transmit(&huart2,dangerous_CO ,sizeof(dangerous_CO)-1,100);
 		HAL_Delay(3000);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
 		LCD_homepage();
 	}
 }

@@ -175,12 +175,10 @@
 #define READ_FIFO_PIXEL(RGB565)   	do{ \
 	                                  RGB565=0;\
 	                                  FIFO_RCLK_L();\
-																		RGB565 = (GPIOB ->IDR) & 0xfc00;\
-																		RGB565 |= (GPIOB ->IDR << 2) & 0x0300;\
+																		RGB565 = (GPIOB ->IDR) & 0xff00;\
 	                                  FIFO_RCLK_H();\
                                     FIFO_RCLK_L();\
-																		RGB565 |= (GPIOB ->IDR >>8) & 0x00fc;\
-																		RGB565 |= (GPIOB ->IDR >>6) & 0x0003;\
+																		RGB565 |= (GPIOB ->IDR >>8) & 0x00ff;\
 	                                  FIFO_RCLK_H();\
                                     } while(0)
 

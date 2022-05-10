@@ -47,8 +47,6 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
-I2C_HandleTypeDef hi2c1;
-
 SD_HandleTypeDef hsd;
 
 UART_HandleTypeDef huart1;
@@ -68,7 +66,6 @@ static void MX_FSMC_Init(void);
 static void MX_SDIO_SD_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -112,7 +109,6 @@ int main(void)
   MX_FATFS_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
-  MX_I2C1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	macXPT2046_CS_DISABLE();
@@ -177,10 +173,7 @@ int main(void)
 			door_status = 0;
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,GPIO_PIN_SET); // green off
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,GPIO_PIN_RESET); // red on
-		}
-
-		//if door close with compass > 0 degree
-		
+		}		
 		
 		HAL_Delay(500);
     /* USER CODE END WHILE */
@@ -276,40 +269,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
-
-}
-
-/**
-  * @brief I2C1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C1_Init(void)
-{
-
-  /* USER CODE BEGIN I2C1_Init 0 */
-
-  /* USER CODE END I2C1_Init 0 */
-
-  /* USER CODE BEGIN I2C1_Init 1 */
-
-  /* USER CODE END I2C1_Init 1 */
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
-  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1 = 0;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C1_Init 2 */
-
-  /* USER CODE END I2C1_Init 2 */
 
 }
 
@@ -432,8 +391,8 @@ static void MX_GPIO_Init(void)
                           |Camera_SDA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Buzzer_Pin|keypad_R1_Pin|keypad_R2_Pin|keypad_R3_Pin
-                          |keypad_R4_Pin|Camera_RRST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, keypad_R1_Pin|keypad_R2_Pin|keypad_R3_Pin|keypad_R4_Pin
+                          |Camera_RRST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, RGB_G_for_door_Pin|RGB_R_for_door_Pin, GPIO_PIN_RESET);
@@ -485,13 +444,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(key_1_on_board_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Buzzer_Pin Camera_RRST_Pin */
-  GPIO_InitStruct.Pin = Buzzer_Pin|Camera_RRST_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
   /*Configure GPIO pins : keypad_R1_Pin keypad_R2_Pin keypad_R3_Pin keypad_R4_Pin */
   GPIO_InitStruct.Pin = keypad_R1_Pin|keypad_R2_Pin|keypad_R3_Pin|keypad_R4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -519,9 +471,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(keypad_C3_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Camera_D2_Pin Camera_D3_Pin Camera_D4_Pin Camera_D5_Pin
-                           Camera_D6_Pin Camera_D7_Pin camera_d0_Pin camera_d1_Pin */
+                           Camera_D6_Pin Camera_D7_Pin Camera_D0_Pin Camera_D1_Pin */
   GPIO_InitStruct.Pin = Camera_D2_Pin|Camera_D3_Pin|Camera_D4_Pin|Camera_D5_Pin
-                          |Camera_D6_Pin|Camera_D7_Pin|camera_d0_Pin|camera_d1_Pin;
+                          |Camera_D6_Pin|Camera_D7_Pin|Camera_D0_Pin|Camera_D1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -545,6 +497,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(fingerprint_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Camera_RRST_Pin */
+  GPIO_InitStruct.Pin = Camera_RRST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(Camera_RRST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : keypad_C4_Pin */
   GPIO_InitStruct.Pin = keypad_C4_Pin;
