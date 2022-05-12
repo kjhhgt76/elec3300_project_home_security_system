@@ -20,7 +20,7 @@ char * readPhotoPath[]={"photo1.bmp","photo2.bmp","photo3.bmp","photo4.bmp","pho
 "photo17.bmp","photo18.bmp","photo19.bmp","photo20.bmp"};
 extern UART_HandleTypeDef huart2;
 //variables for camera module
-volatile uint8_t Ov7725_vsync ; 
+volatile uint8_t Ov7725_vsync = 0; 
 
 
 
@@ -188,7 +188,6 @@ int scan_re_entry(int* photoNum){
 int newbmp(void){
 	__HAL_RCC_FSMC_CLK_DISABLE();
 	while(Ov7725_Init() != SUCCESS); //initialize camera ov7725; if any error, loop forever
-	Ov7725_vsync = 0;   //for detecting if camera finish capturing; if yes, it becomes 2 as detecting two failing edge in VSYNC
 	if (f_mount(&photoFATFS,SDPath,1) == FR_OK){ // if sd card is successfully detected.
 		const char * photoPath = readPhotoPath[photoNum];
 		FRESULT error = f_open(&photoFILE, photoPath, FA_CREATE_ALWAYS | FA_WRITE);
@@ -220,7 +219,7 @@ int newbmp(void){
 				uint16_t i, j;	
 				uint16_t Camera_Data;
 					
-				//if (Ov7725_vsync == 2){
+				if (Ov7725_vsync == 2){ //for detecting if camera finish capturing; if yes, it becomes 2 as detecting two failing edge in VSYNC
 					for (i = 0; i < 240; i++)
 					{
 						for (j = 0; j < 320; j++)
@@ -231,7 +230,7 @@ int newbmp(void){
 					}
 					HAL_Delay(1000);
 					Ov7725_vsync = 0;
-				//}
+				}
 				f_close(&photoFILE);
 				__HAL_RCC_FSMC_CLK_ENABLE();
 				return 0;
