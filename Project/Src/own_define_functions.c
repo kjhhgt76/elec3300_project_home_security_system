@@ -147,7 +147,7 @@ void verifyPassword(const char* password, char* password_enter, int* photoNum, i
 		
 		if (strncmp(password, password_enter,sizeof(password)) == 0){
 			LCD_DrawString_Color(10,200,"Correct password. Door is unlocked.", BACKGROUND, BLUE);
-
+			re_entry = 0;
 			*door_status = 1;
 			break;
 		}else{

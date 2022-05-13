@@ -548,6 +548,7 @@ int16_t press_FR(void)
           LCD_DrawString(10, 10, str);
 					if (delete_finger != 1)
 						door_status = 1;
+					re_entry = 0;
           HAL_Delay(1500);
 					return seach.pageID;
         }

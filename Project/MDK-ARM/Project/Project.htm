@@ -3,9 +3,9 @@
 <title>Static Call Graph - [Project\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Project\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Thu May 12 10:16:43 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Fri May 13 10:54:32 2022
 <BR><P>
-<H3>Maximum Stack Usage =       4624 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       4632 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 EXTI9_5_IRQHandler &rArr; press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 <P>
@@ -627,7 +627,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
 <P><STRONG><a name="[21]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 554 bytes, Stack size 88 bytes, stm32f1xx_it.o(i.EXTI9_5_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4624<LI>Call Chain = EXTI9_5_IRQHandler &rArr; press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
+<BR><BR>[Stack]<UL><LI>Max Depth = 4632<LI>Call Chain = EXTI9_5_IRQHandler &rArr; press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_homepage
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawString
@@ -1971,8 +1971,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_re_entry
 </UL>
 
-<P><STRONG><a name="[7f]"></a>press_FR</STRONG> (Thumb, 226 bytes, Stack size 48 bytes, as608.o(i.press_FR))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4536<LI>Call Chain = press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
+<P><STRONG><a name="[7f]"></a>press_FR</STRONG> (Thumb, 234 bytes, Stack size 56 bytes, as608.o(i.press_FR))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4544<LI>Call Chain = press_FR &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_re_entry
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawString
@@ -2038,7 +2038,7 @@ Global Symbols
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyPassword
 </UL>
 
-<P><STRONG><a name="[134]"></a>verifyPassword</STRONG> (Thumb, 174 bytes, Stack size 56 bytes, own_define_functions.o(i.verifyPassword))
+<P><STRONG><a name="[134]"></a>verifyPassword</STRONG> (Thumb, 182 bytes, Stack size 56 bytes, own_define_functions.o(i.verifyPassword))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4544<LI>Call Chain = verifyPassword &rArr; scan_re_entry &rArr; newbmp &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
